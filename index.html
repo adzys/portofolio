@@ -1,1201 +1,640 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>vCard - Personal Portfolio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adzys Saleh Aryanto — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #1a1b1e; --bg2: #212428; --bg3: #2b2e35;
+  --border: #383a40; --accent: #ff7b00; --accent-hover: #ff9a3c;
+  --text: #d4d8e0; --text-muted: #7b8190; --text-light: #f0f2f5;
+  --radius: 14px; --radius-sm: 8px;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 300; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.7; }
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; }
+ul { list-style: none; }
+button { background: none; border: none; cursor: pointer; font-family: inherit; }
 
-  <!--
-    - favicon
-  -->
-  <link rel="shortcut icon" href="./assets/images/logo.ico" type="image/x-icon">
+main {
+  display: grid; grid-template-columns: 280px 1fr;
+  gap: 24px; max-width: 1100px; margin: 0 auto;
+  padding: 40px 24px; min-height: 100vh; align-items: start;
+}
 
-  <!--
-    - custom css link
-  -->
-  <link rel="stylesheet" href="./assets/css/style.css">
+/* SIDEBAR */
+.sidebar { background: var(--bg2); border-radius: var(--radius); border: 1px solid var(--border); padding: 28px; position: sticky; top: 24px; }
+.sidebar-info { display: flex; flex-direction: column; align-items: center; text-align: center; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+.avatar-box { width: 110px; height: 110px; border-radius: 20px; overflow: hidden; margin-bottom: 18px; background: var(--bg3); display: flex; align-items: center; justify-content: center; border: 2px solid var(--border); }
+.sidebar h1 { font-size: 18px; font-weight: 600; color: var(--text-light); margin-bottom: 8px; }
+.sidebar-role { display: inline-block; background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 4px 14px; font-size: 11px; color: var(--text-muted); letter-spacing: 0.5px; }
+.info-toggle { width: 100%; margin-top: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--accent); font-size: 12px; font-family: 'Poppins', sans-serif; font-weight: 500; transition: all 0.25s; }
+.info-toggle:hover { background: var(--accent); color: white; border-color: var(--accent); }
+.info-toggle i { transition: transform 0.3s; }
+.info-toggle.active i { transform: rotate(180deg); }
+.contacts-list { margin-top: 20px; display: flex; flex-direction: column; gap: 14px; overflow: hidden; max-height: 0; transition: max-height 0.4s ease; }
+.contacts-list.open { max-height: 600px; }
+.contact-item { display: flex; align-items: center; gap: 14px; }
+.contact-icon { width: 36px; height: 36px; background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 14px; flex-shrink: 0; }
+.contact-info span { font-size: 10px; color: var(--text-muted); display: block; margin-bottom: 2px; letter-spacing: 0.5px; text-transform: uppercase; }
+.contact-info a, .contact-info p { font-size: 13px; color: var(--text-light); font-weight: 400; }
+.contact-info a:hover { color: var(--accent); }
+.sidebar-sep { height: 1px; background: var(--border); margin: 20px 0; }
+.social-list { display: flex; justify-content: center; gap: 12px; }
+.social-link { width: 36px; height: 36px; background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 14px; transition: all 0.25s; }
+.social-link:hover { background: var(--accent); color: white; border-color: var(--accent); }
 
-  <!--
-    - google font link
-  -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+/* CONTENT */
+.content { display: flex; flex-direction: column; gap: 24px; }
+.nav-tabs { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.nav-list { display: flex; }
+.nav-item { flex: 1; }
+.nav-btn { width: 100%; padding: 16px 12px; color: var(--text-muted); font-size: 12px; font-weight: 500; letter-spacing: 0.5px; font-family: 'Poppins', sans-serif; transition: all 0.25s; border-bottom: 2px solid transparent; text-align: center; }
+.nav-btn:hover { color: var(--text); }
+.nav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+.nav-btn i { display: block; font-size: 16px; margin-bottom: 4px; }
+.page { display: none; }
+.page.active { display: block; }
+
+/* ABOUT */
+.about-section { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; }
+.page-title { font-size: 22px; font-weight: 600; color: var(--text-light); position: relative; padding-bottom: 14px; margin-bottom: 24px; }
+.page-title::after { content: ''; position: absolute; bottom: 0; left: 0; width: 40px; height: 3px; background: var(--accent); border-radius: 3px; }
+.about-text p { color: var(--text); line-height: 1.8; margin-bottom: 12px; text-align: justify; }
+.about-text strong { color: var(--text-light); font-weight: 600; }
+.service-title { font-size: 16px; font-weight: 600; color: var(--text-light); margin: 32px 0 16px; }
+.service-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.service-card { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 20px; display: flex; align-items: flex-start; gap: 16px; transition: all 0.25s; }
+.service-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+.service-icon { width: 44px; height: 44px; background: var(--bg2); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--accent); flex-shrink: 0; }
+.service-card h3 { font-size: 13px; font-weight: 600; color: var(--text-light); margin-bottom: 4px; }
+.service-card p { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+
+/* RESUME */
+.resume-section { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; }
+.resume-section + .resume-section { margin-top: 24px; }
+.section-title { font-size: 16px; font-weight: 600; color: var(--text-light); display: flex; align-items: center; gap: 10px; margin-bottom: 24px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+.section-title i { color: var(--accent); }
+.timeline { position: relative; padding-left: 20px; }
+.timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(to bottom, var(--accent), transparent); }
+.timeline-item { position: relative; padding-left: 24px; margin-bottom: 28px; }
+.timeline-item:last-child { margin-bottom: 0; }
+.timeline-item::before { content: ''; position: absolute; left: -24px; top: 8px; width: 10px; height: 10px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 0 3px rgba(255,123,0,0.2); }
+.timeline-period { font-size: 11px; color: var(--accent); font-weight: 500; letter-spacing: 0.5px; margin-bottom: 4px; }
+.timeline-title { font-size: 14px; font-weight: 600; color: var(--text-light); margin-bottom: 4px; }
+.timeline-company { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+.timeline-desc { font-size: 12px; color: var(--text); line-height: 1.7; }
+
+/* SKILL CARDS */
+.skill-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 8px; }
+.skill-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 10px; transition: all 0.25s; }
+.skill-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+.skill-card img, .skill-card i { width: 48px; height: 48px; font-size: 48px; }
+.skill-card span { font-size: 11px; color: var(--text-muted); text-align: center; }
+.skill-category { font-size: 12px; font-weight: 600; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin: 20px 0 10px; }
+
+/* CERT */
+.cert-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 8px; }
+.cert-card { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; display: flex; align-items: center; gap: 12px; transition: all 0.2s; }
+.cert-card:hover { border-color: var(--accent); }
+.cert-icon { font-size: 22px; color: var(--accent); }
+.cert-card h4 { font-size: 12px; font-weight: 600; color: var(--text-light); margin-bottom: 2px; }
+.cert-card p { font-size: 11px; color: var(--text-muted); }
+
+/* TAGS */
+.tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.tag { padding: 3px 10px; background: rgba(255,123,0,0.1); border: 1px solid rgba(255,123,0,0.25); border-radius: 4px; font-size: 10px; color: var(--accent); letter-spacing: 0.5px; }
+
+/* PORTFOLIO */
+.portfolio-section { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; }
+.filter-list { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.filter-btn { padding: 6px 16px; border-radius: 50px; font-size: 12px; color: var(--text-muted); background: var(--bg3); border: 1px solid var(--border); font-family: 'Poppins', sans-serif; transition: all 0.2s; }
+.filter-btn:hover { color: var(--text); }
+.filter-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+.project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.project-card { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; transition: all 0.25s; }
+.project-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+.project-thumb { height: 140px; overflow: hidden; }
+.project-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.project-meta { padding: 14px 16px; }
+.project-cat { font-size: 10px; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+.project-name { font-size: 13px; font-weight: 600; color: var(--text-light); margin-bottom: 6px; }
+.project-desc { font-size: 11px; color: var(--text-muted); line-height: 1.6; }
+
+/* CONTACT */
+.contact-section { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; }
+.contact-section + .contact-section { margin-top: 24px; }
+.contact-info-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 8px; }
+.info-card { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 20px; display: flex; align-items: center; gap: 14px; transition: all 0.2s; }
+.info-card:hover { border-color: var(--accent); }
+.info-card-icon { width: 44px; height: 44px; background: var(--bg2); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--accent); flex-shrink: 0; }
+.info-card span { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 4px; }
+.info-card p, .info-card a { font-size: 13px; color: var(--text-light); font-weight: 400; }
+.info-card a:hover { color: var(--accent); }
+.map-box { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; height: 200px; margin-top: 14px; }
+.map-box iframe { width: 100%; height: 100%; border: none; filter: grayscale(1) invert(0.85) brightness(0.7); }
+.form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 14px; }
+.form-field { display: flex; flex-direction: column; gap: 6px; }
+.form-field.full { grid-column: 1 / -1; }
+.form-field label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; }
+.form-field input, .form-field textarea { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; color: var(--text-light); font-size: 13px; font-family: 'Poppins', sans-serif; outline: none; transition: border 0.2s; }
+.form-field input:focus, .form-field textarea:focus { border-color: var(--accent); }
+.form-field textarea { resize: vertical; min-height: 120px; }
+.form-btn { display: flex; align-items: center; justify-content: flex-end; margin-top: 8px; }
+.btn-send { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; background: var(--accent); color: white; border-radius: 50px; font-size: 13px; font-weight: 500; font-family: 'Poppins', sans-serif; border: none; cursor: pointer; transition: all 0.25s; }
+.btn-send:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,123,0,0.35); }
+.send-feedback { margin-top: 12px; font-size: 12px; text-align: right; display: none; }
+.send-feedback.success { color: #10b981; display: block; }
+.send-feedback.error { color: #ef4444; display: block; }
+
+@media (max-width: 880px) {
+  main { grid-template-columns: 1fr; padding: 20px 16px; gap: 16px; }
+  .sidebar { position: static; }
+  .service-grid, .project-grid, .cert-grid, .contact-info-cards, .skill-grid { grid-template-columns: repeat(2, 1fr); }
+  .form-grid { grid-template-columns: 1fr; }
+  .nav-btn span { display: none; }
+}
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+.page.active { animation: fadeUp 0.35s ease; }
+</style>
 </head>
-
 <body>
+<main>
 
-  <!--
-    - #MAIN
-  -->
-
-  <main>
-
-    <!--
-      - #SIDEBAR
-    -->
-
-    <aside class="sidebar" data-sidebar>
-
-      <div class="sidebar-info">
-
-        <figure class="avatar-box">
-          <img src="./assets/images/my-avatar.png" alt="Richard hanrick" width="80">
-        </figure>
-
-        <div class="info-content">
-          <h1 class="name" title="Richard hanrick">Richard hanrick</h1>
-
-          <p class="title">Web developer</p>
-        </div>
-
-        <button class="info_more-btn" data-sidebar-btn>
-          <span>Show Contacts</span>
-
-          <ion-icon name="chevron-down"></ion-icon>
-        </button>
-
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-info">
+      <div class="avatar-box">
+        <img src="./foto profil sans.png" alt="Adzys" style="width:100%;height:100%;object-fit:cover;">
       </div>
-
-      <div class="sidebar-info_more">
-
-        <div class="separator"></div>
-
-        <ul class="contacts-list">
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="mail-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Email</p>
-
-              <a href="mailto:richard@example.com" class="contact-link">richard@example.com</a>
-            </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="phone-portrait-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Phone</p>
-
-              <a href="tel:+12133522795" class="contact-link">+1 (213) 352-2795</a>
-            </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="calendar-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Birthday</p>
-
-              <time datetime="1982-06-23">June 23, 1982</time>
-            </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="location-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Location</p>
-
-              <address>Sacramento, California, USA</address>
-            </div>
-
-          </li>
-
-        </ul>
-
-        <div class="separator"></div>
-
-        <ul class="social-list">
-
-          <li class="social-item">
-            <a href="#" class="social-link">
-              <ion-icon name="logo-facebook"></ion-icon>
-            </a>
-          </li>
-
-          <li class="social-item">
-            <a href="#" class="social-link">
-              <ion-icon name="logo-twitter"></ion-icon>
-            </a>
-          </li>
-
-          <li class="social-item">
-            <a href="#" class="social-link">
-              <ion-icon name="logo-instagram"></ion-icon>
-            </a>
-          </li>
-
-        </ul>
-
-      </div>
-
-    </aside>
-
-
-
-
-
-    <!--
-      - #main-content
-    -->
-
-    <div class="main-content">
-
-      <!--
-        - #NAVBAR
-      -->
-
-      <nav class="navbar">
-
-        <ul class="navbar-list">
-
-          <li class="navbar-item">
-            <button class="navbar-link  active" data-nav-link>About</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Resume</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Portfolio</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Blog</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Contact</button>
-          </li>
-
-        </ul>
-
-      </nav>
-
-
-
-
-
-      <!--
-        - #ABOUT
-      -->
-
-      <article class="about  active" data-page="about">
-
-        <header>
-          <h2 class="h2 article-title">About me</h2>
-        </header>
-
-        <section class="about-text">
-          <p>
-            I'm Creative Director and UI/UX Designer from Sydney, Australia, working in web development and print media.
-            I enjoy
-            turning complex problems into simple, beautiful and intuitive designs.
-          </p>
-
-          <p>
-            My job is to build your website so that it is functional and user-friendly but at the same time attractive.
-            Moreover, I
-            add personal touch to your product and make sure that is eye-catching and easy to use. My aim is to bring
-            across your
-            message and identity in the most creative way. I created web design for many famous brand companies.
-          </p>
-        </section>
-
-
-        <!--
-          - service
-        -->
-
-        <section class="service">
-
-          <h3 class="h3 service-title">What i'm doing</h3>
-
-          <ul class="service-list">
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-design.svg
-                " alt="design icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Web design</h4>
-
-                <p class="service-item-text">
-                  The most modern and high-quality design made at a professional level.
-                </p>
-              </div>
-
-            </li>
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-dev.svg" alt="Web development icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Web development</h4>
-
-                <p class="service-item-text">
-                  High-quality development of sites at the professional level.
-                </p>
-              </div>
-
-            </li>
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-app.svg" alt="mobile app icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Mobile apps</h4>
-
-                <p class="service-item-text">
-                  Professional development of applications for iOS and Android.
-                </p>
-              </div>
-
-            </li>
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-photo.svg" alt="camera icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Photography</h4>
-
-                <p class="service-item-text">
-                  I make high-quality photos of any category at a professional level.
-                </p>
-              </div>
-
-            </li>
-
-          </ul>
-
-        </section>
-
-
-        <!--
-          - testimonials
-        -->
-
-        <section class="testimonials">
-
-          <h3 class="h3 testimonials-title">Testimonials</h3>
-
-          <ul class="testimonials-list has-scrollbar">
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Daniel lewis</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-2.png" alt="Jessica miller" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Jessica miller</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-3.png" alt="Emily evans" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Emily evans</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-4.png" alt="Henry william" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Henry william</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-          </ul>
-
-        </section>
-
-
-        <!--
-          - testimonials modal
-        -->
-
-        <div class="modal-container" data-modal-container>
-
-          <div class="overlay" data-overlay></div>
-
-          <section class="testimonials-modal">
-
-            <button class="modal-close-btn" data-modal-close-btn>
-              <ion-icon name="close-outline"></ion-icon>
-            </button>
-
-            <div class="modal-img-wrapper">
-              <figure class="modal-avatar-box">
-                <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="80" data-modal-img>
-              </figure>
-
-              <img src="./assets/images/icon-quote.svg" alt="quote icon">
-            </div>
-
-            <div class="modal-content">
-
-              <h4 class="h3 modal-title" data-modal-title>Daniel lewis</h4>
-
-              <time datetime="2021-06-14">14 June, 2021</time>
-
-              <div data-modal-text>
-                <p>
-                  Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                  lot of experience
-                  and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                  consectetur adipiscing
-                  elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                </p>
-              </div>
-
-            </div>
-
-          </section>
-
-        </div>
-
-
-        <!--
-          - clients
-        -->
-
-        <section class="clients">
-
-          <h3 class="h3 clients-title">Clients</h3>
-
-          <ul class="clients-list has-scrollbar">
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-1-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-2-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-3-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-4-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-5-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-6-color.png" alt="client logo">
-              </a>
-            </li>
-
-          </ul>
-
-        </section>
-
-      </article>
-
-
-
-
-
-      <!--
-        - #RESUME
-      -->
-
-      <article class="resume" data-page="resume">
-
-        <header>
-          <h2 class="h2 article-title">Resume</h2>
-        </header>
-
-        <section class="timeline">
-
-          <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="book-outline"></ion-icon>
-            </div>
-
-            <h3 class="h3">Education</h3>
+      <h1>Adzys Saleh Aryanto</h1>
+      <span class="sidebar-role">Bachelor of Electrical Engineering</span>
+      <button class="info-toggle" id="infoToggle" onclick="toggleContacts()">
+        Show Contacts <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <ul class="contacts-list" id="contactsList">
+        <li class="contact-item">
+          <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+          <div class="contact-info">
+            <span>Email</span>
+            <a href="mailto:adzysslh@gmail.com">adzysslh@gmail.com</a>
           </div>
-
-          <ol class="timeline-list">
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">University school of the arts</h4>
-
-              <span>2007 — 2008</span>
-
-              <p class="timeline-text">
-                Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et
-                quas molestias
-                exceptur.
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">New york academy of art</h4>
-
-              <span>2006 — 2007</span>
-
-              <p class="timeline-text">
-                Ratione voluptatem sequi nesciunt, facere quisquams facere menda ossimus, omnis voluptas assumenda est
-                omnis..
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">High school of art and design</h4>
-
-              <span>2002 — 2004</span>
-
-              <p class="timeline-text">
-                Duis aute irure dolor in reprehenderit in voluptate, quila voluptas mag odit aut fugit, sed consequuntur
-                magni dolores
-                eos.
-              </p>
-
-            </li>
-
-          </ol>
-
-        </section>
-
-        <section class="timeline">
-
-          <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="book-outline"></ion-icon>
-            </div>
-
-            <h3 class="h3">Experience</h3>
+        </li>
+        <li class="contact-item">
+          <div class="contact-icon"><i class="fa-brands fa-whatsapp"></i></div>
+          <div class="contact-info">
+            <span>WhatsApp</span>
+            <a href="https://wa.me/6282120388737" target="_blank">+62 821-2038-8737</a>
           </div>
-
-          <ol class="timeline-list">
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Creative director</h4>
-
-              <span>2015 — Present</span>
-
-              <p class="timeline-text">
-                Nemo enim ipsam voluptatem blanditiis praesentium voluptum delenit atque corrupti, quos dolores et qvuas
-                molestias
-                exceptur.
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Art director</h4>
-
-              <span>2013 — 2015</span>
-
-              <p class="timeline-text">
-                Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et
-                quas molestias
-                exceptur.
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Web designer</h4>
-
-              <span>2010 — 2013</span>
-
-              <p class="timeline-text">
-                Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et
-                quas molestias
-                exceptur.
-              </p>
-
-            </li>
-
-          </ol>
-
-        </section>
-
-        <section class="skill">
-
-          <h3 class="h3 skills-title">My skills</h3>
-
-          <ul class="skills-list content-card">
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">Web design</h5>
-                <data value="80">80%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 80%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">Graphic design</h5>
-                <data value="70">70%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 70%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">Branding</h5>
-                <data value="90">90%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 90%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">WordPress</h5>
-                <data value="50">50%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 50%;"></div>
-              </div>
-
-            </li>
-
-          </ul>
-
-        </section>
-
-      </article>
-
-
-
-
-
-      <!--
-        - #PORTFOLIO
-      -->
-
-      <article class="portfolio" data-page="portfolio">
-
-        <header>
-          <h2 class="h2 article-title">Portfolio</h2>
-        </header>
-
-        <section class="projects">
-
-          <ul class="filter-list">
-
-            <li class="filter-item">
-              <button class="active" data-filter-btn>All</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Web design</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Applications</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Web development</button>
-            </li>
-
-          </ul>
-
-          <div class="filter-select-box">
-
-            <button class="filter-select" data-select>
-
-              <div class="select-value" data-selecct-value>Select category</div>
-
-              <div class="select-icon">
-                <ion-icon name="chevron-down"></ion-icon>
-              </div>
-
-            </button>
-
-            <ul class="select-list">
-
-              <li class="select-item">
-                <button data-select-item>All</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Web design</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Applications</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Web development</button>
-              </li>
-
-            </ul>
-
+        </li>
+        <li class="contact-item">
+          <div class="contact-icon"><i class="fa-solid fa-cake-candles"></i></div>
+          <div class="contact-info">
+            <span>Birthday</span>
+            <p>Cirebon, June 16, 2003</p>
           </div>
-
-          <ul class="project-list">
-
-            <li class="project-item  active" data-filter-item data-category="web development">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-1.jpg" alt="finance" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Finance</h3>
-
-                <p class="project-category">Web development</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="web development">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-2.png" alt="orizon" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Orizon</h3>
-
-                <p class="project-category">Web development</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="web design">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-3.jpg" alt="fundo" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Fundo</h3>
-
-                <p class="project-category">Web design</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="applications">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-4.png" alt="brawlhalla" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Brawlhalla</h3>
-
-                <p class="project-category">Applications</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="web design">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-5.png" alt="dsm." loading="lazy">
-                </figure>
-
-                <h3 class="project-title">DSM.</h3>
-
-                <p class="project-category">Web design</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="web design">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-6.png" alt="metaspark" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">MetaSpark</h3>
-
-                <p class="project-category">Web design</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="web development">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-7.png" alt="summary" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Summary</h3>
-
-                <p class="project-category">Web development</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="applications">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-8.jpg" alt="task manager" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Task Manager</h3>
-
-                <p class="project-category">Applications</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="web development">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-9.png" alt="arrival" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Arrival</h3>
-
-                <p class="project-category">Web development</p>
-
-              </a>
-            </li>
-
-          </ul>
-
-        </section>
-
-      </article>
-
-
-
-
-
-      <!--
-        - #BLOG
-      -->
-
-      <article class="blog" data-page="blog">
-
-        <header>
-          <h2 class="h2 article-title">Blog</h2>
-        </header>
-
-        <section class="blog-posts">
-
-          <ul class="blog-posts-list">
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-1.jpg" alt="Design conferences in 2022" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Design conferences in 2022</h3>
-
-                  <p class="blog-text">
-                    Veritatis et quasi architecto beatae vitae dicta sunt, explicabo.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-2.jpg" alt="Best fonts every designer" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Best fonts every designer</h3>
-
-                  <p class="blog-text">
-                    Sed ut perspiciatis, nam libero tempore, cum soluta nobis est eligendi.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-3.jpg" alt="Design digest #80" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Design digest #80</h3>
-
-                  <p class="blog-text">
-                    Excepteur sint occaecat cupidatat no proident, quis nostrum exercitationem ullam corporis suscipit.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-4.jpg" alt="UI interactions of the week" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">UI interactions of the week</h3>
-
-                  <p class="blog-text">
-                    Enim ad minim veniam, consectetur adipiscing elit, quis nostrud exercitation ullamco laboris nisi.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-5.jpg" alt="The forgotten art of spacing" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">The forgotten art of spacing</h3>
-
-                  <p class="blog-text">
-                    Maxime placeat, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-6.jpg" alt="Design digest #79" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Design digest #79</h3>
-
-                  <p class="blog-text">
-                    Optio cumque nihil impedit uo minus quod maxime placeat, velit esse cillum.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-          </ul>
-
-        </section>
-
-      </article>
-
-
-
-
-
-      <!--
-        - #CONTACT
-      -->
-
-      <article class="contact" data-page="contact">
-
-        <header>
-          <h2 class="h2 article-title">Contact</h2>
-        </header>
-
-        <section class="mapbox" data-mapbox>
-          <figure>
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d199666.5651251294!2d-121.58334177520186!3d38.56165006739519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x809ac672b28397f9%3A0x921f6aaa74197fdb!2sSacramento%2C%20CA%2C%20USA!5e0!3m2!1sen!2sbd!4v1647608789441!5m2!1sen!2sbd"
-              width="400" height="300" loading="lazy"></iframe>
-          </figure>
-        </section>
-
-        <section class="contact-form">
-
-          <h3 class="h3 form-title">Contact Form</h3>
-
-          <form action="#" class="form" data-form>
-
-            <div class="input-wrapper">
-              <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
-
-              <input type="email" name="email" class="form-input" placeholder="Email address" required data-form-input>
-            </div>
-
-            <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
-
-            <button class="form-btn" type="submit" disabled data-form-btn>
-              <ion-icon name="paper-plane"></ion-icon>
-              <span>Send Message</span>
-            </button>
-
-          </form>
-
-        </section>
-
-      </article>
-
+        </li>
+        <li class="contact-item">
+          <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+          <div class="contact-info">
+            <span>Location</span>
+            <p>Bandung, West Java</p>
+          </div>
+        </li>
+      </ul>
     </div>
+    <div class="sidebar-sep"></div>
+    <ul class="social-list">
+      <li><a href="https://linkedin.com/in/adzyssaleharyanto" target="_blank" class="social-link"><i class="fa-brands fa-linkedin-in"></i></a></li>
+      <li><a href="https://github.com/adzys" target="_blank" class="social-link"><i class="fa-brands fa-github"></i></a></li>
+      <li><a href="https://www.instagram.com/ajisslh/" target="_blank" class="social-link"><i class="fa-brands fa-instagram"></i></a></li>
+    </ul>
+  </aside>
 
-  </main>
+  <!-- CONTENT -->
+  <div class="content">
+    <nav class="nav-tabs">
+      <ul class="nav-list">
+        <li class="nav-item">
+          <button class="nav-btn active" onclick="switchPage('about', this)">
+            <i class="fa-solid fa-user"></i><span>About</span>
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-btn" onclick="switchPage('resume', this)">
+            <i class="fa-solid fa-file-lines"></i><span>Resume</span>
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-btn" onclick="switchPage('portfolio', this)">
+            <i class="fa-solid fa-folder-open"></i><span>Project</span>
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-btn" onclick="switchPage('contact', this)">
+            <i class="fa-solid fa-message"></i><span>Contact</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
 
+    <!-- ABOUT -->
+    <article class="page active" id="about">
+      <div class="about-section">
+        <h2 class="page-title">About Me</h2>
+        <div class="about-text">
+          <p>
+            I build end-to-end engineering solutions that connect hardware and software — from embedded firmware on microcontrollers to real-time monitoring dashboards. With a Bachelor's degree in Electrical Engineering, I bring hands-on experience in embedded systems, hardware troubleshooting, and network-based data communication. Familiar with system integration, cloud databases, and technical documentation, with a strong focus on reliable system performance and maintenance.
+          </p>
+        </div>
+        <h3 class="service-title">What Can I Do</h3>
+        <ul class="service-grid">
+          <li class="service-card">
+            <div class="service-icon"><i class="fa-solid fa-microchip"></i></div>
+            <div>
+              <h3>Embedded Systems</h3>
+              <p>ESP32 firmware development, real-time control, and distributed microcontroller-based systems.</p>
+            </div>
+          </li>
+          <li class="service-card">
+            <div class="service-icon"><i class="fa-solid fa-wifi"></i></div>
+            <div>
+              <h3>IoT &amp; Monitoring</h3>
+              <p>Web-based energy monitoring systems with MQTT, TCP/IP, and UDP communication to cloud databases.</p>
+            </div>
+          </li>
+          <li class="service-card">
+            <div class="service-icon"><i class="fa-solid fa-code"></i></div>
+            <div>
+              <h3>Full-Stack Development</h3>
+              <p>Front-end and back-end development for real-time control systems and data management.</p>
+            </div>
+          </li>
+          <li class="service-card">
+            <div class="service-icon"><i class="fa-solid fa-network-wired"></i></div>
+            <div>
+              <h3>Network &amp; RF Design</h3>
+              <p>FTTH/GPON network design and microwave radio link systems with link budget analysis.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </article>
 
+    <!-- RESUME -->
+    <article class="page" id="resume">
 
+      <div class="resume-section">
+        <h3 class="section-title"><i class="fa-solid fa-briefcase"></i> Work Experience</h3>
+        <ul class="timeline">
+          <li class="timeline-item">
+            <p class="timeline-period">Dec 2025 – Present</p>
+            <h4 class="timeline-title">Software Engineer Intern</h4>
+            <p class="timeline-company">Len Railway System — Bandung</p>
+            <p class="timeline-desc">Designed the UI/UX of a PID Configurator for the P5 LED display system. Built front-end and back-end modules for user role management, and implemented TCP/IP & UDP communication between the web server and ESP32 controllers.</p>
+            <div class="tag-list">
+              <span class="tag">ESP32</span><span class="tag">TCP/IP</span><span class="tag">UDP</span><span class="tag">Firmware</span><span class="tag">Full-Stack</span>
+            </div>
+          </li>
+          <li class="timeline-item">
+            <p class="timeline-period">Apr – Sep 2025</p>
+            <h4 class="timeline-title">Research Assistant</h4>
+            <p class="timeline-company">Dept. of Electrical Engineering Education UPI — Bandung</p>
+            <p class="timeline-desc">Developed a web-based energy monitoring system with real-time data collection. Created firmware to automate sensor data capture and integrate with Firebase cloud database.</p>
+            <div class="tag-list">
+              <span class="tag">Firebase</span><span class="tag">IoT</span><span class="tag">Energy Monitoring</span><span class="tag">Firmware</span>
+            </div>
+          </li>
+          <li class="timeline-item">
+            <p class="timeline-period">Aug – Dec 2025</p>
+            <h4 class="timeline-title">R&amp;D and Product Supply Staff</h4>
+            <p class="timeline-company">E-Course LatihHobi — Bandung</p>
+            <p class="timeline-desc">Managed end-to-end material flow including demand planning, procurement, and distribution for training and production needs.</p>
+            <div class="tag-list">
+              <span class="tag">R&D</span><span class="tag">Procurement</span><span class="tag">Inventory</span>
+            </div>
+          </li>
+          <li class="timeline-item">
+            <p class="timeline-period">Sep – Dec 2024</p>
+            <h4 class="timeline-title">Teacher Intern (Embedded Systems)</h4>
+            <p class="timeline-company">SMKN 1 Cimahi — Cimahi</p>
+            <p class="timeline-desc">Taught embedded systems topics to vocational students, managed classroom activities, and ensured readiness of technical materials for practical sessions.</p>
+            <div class="tag-list">
+              <span class="tag">Teaching</span><span class="tag">Embedded Systems</span><span class="tag">Curriculum</span>
+            </div>
+          </li>
+          <li class="timeline-item">
+            <p class="timeline-period">Jul – Aug 2024</p>
+            <h4 class="timeline-title">Engineer &amp; Research Intern</h4>
+            <p class="timeline-company">BBPPMPV BMTI — Cimahi</p>
+            <p class="timeline-desc">Conducted data collection, annotation, and processing for a computer vision-based monitoring system. Performed testing and optimization to improve model accuracy.</p>
+            <div class="tag-list">
+              <span class="tag">Computer Vision</span><span class="tag">Data Annotation</span><span class="tag">ML</span>
+            </div>
+          </li>
+        </ul>
+      </div>
 
+      <div class="resume-section" style="margin-top:24px;">
+        <h3 class="section-title"><i class="fa-solid fa-chart-bar"></i> Technical Skills</h3>
 
+        <p class="skill-category">Languages</p>
+        <div class="skill-grid">
+          <div class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" style="width:48px;height:48px;">
+            <span>C++</span>
+          </div>
+          <div class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg" style="width:48px;height:48px;">
+            <span>Dart</span>
+          </div>
+          <div class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" style="width:48px;height:48px;">
+            <span>JavaScript</span>
+          </div>
+          <div class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" style="width:48px;height:48px;">
+            <span>TypeScript</span>
+          </div>
+          <div class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" style="width:48px;height:48px;">
+            <span>Python</span>
+          </div>
+          <div class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" style="width:48px;height:48px;">
+            <span>HTML</span>
+          </div>
+        </div>
 
-  <!--
-    - custom js link
-  -->
-  <script src="./assets/js/script.js"></script>
+        <p class="skill-category">Tools & Framework</p>
+        <div class="skill-grid">
+          <div class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" style="width:48px;height:48px;">
+            <span>Flutter</span>
+          </div>
+          <div class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" style="width:48px;height:48px;">
+            <span>Node.js</span>
+          </div>
+          <div class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" style="width:48px;height:48px;">
+            <span>Firebase</span>
+          </div>
+          <div class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg" style="width:48px;height:48px;">
+            <span>Arduino</span>
+          </div>
+          <div class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/matlab/matlab-original.svg" style="width:48px;height:48px;">
+            <span>MATLAB</span>
+          </div>
+          <div class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" style="width:48px;height:48px;">
+            <span>VS Code</span>
+          </div>
+          <div class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" style="width:48px;height:48px;">
+            <span>Figma</span>
+          </div>
+          <div class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" style="width:48px;height:48px;">
+            <span>SQL</span>
+          </div>
+        </div>
+      </div>
 
-  <!--
-    - ionicon link
-  -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+      <div class="resume-section" style="margin-top:24px;">
+        <h3 class="section-title"><i class="fa-solid fa-graduation-cap"></i> Education</h3>
+        <ul class="timeline">
+          <li class="timeline-item">
+            <p class="timeline-period">2021 — 2025</p>
+            <h4 class="timeline-title">Bachelor of Electrical Engineering Education</h4>
+            <p class="timeline-company">Universitas Pendidikan Indonesia — Bandung</p>
+            <p class="timeline-desc">GPA 3.53 / 4.00. Focused on Control Systems, Digital Techniques, Microprocessor Systems, and Electrical Measurement. Final Project: Website-based electrical energy monitoring system using Flutter.</p>
+          </li>
+        </ul>
+      </div>
 
+      <div class="resume-section" style="margin-top:24px;">
+        <h3 class="section-title"><i class="fa-solid fa-certificate"></i> Certifications</h3>
+        <div class="cert-grid">
+          <div class="cert-card">
+            <div class="cert-icon"><i class="fa-solid fa-laptop-code"></i></div>
+            <div>
+              <h4>IC3 Digital Literacy Level 1</h4>
+              <p>Publisher: Certiport</p>
+            </div>
+          </div>
+          <div class="cert-card">
+            <div class="cert-icon"><i class="fa-solid fa-bolt"></i></div>
+            <div>
+              <h4>BNSP Electrical Power Distribution</h4>
+              <p>LSP Universitas Pendidikan Indonesia</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </article>
+
+    <!-- PORTFOLIO -->
+    <article class="page" id="portfolio">
+      <div class="portfolio-section">
+        <h2 class="page-title">Portofolio</h2>
+        <ul class="filter-list">
+          <li><button class="filter-btn active" data-filter="all" onclick="filterProjects('all', this)">All</button></li>
+          <li><button class="filter-btn" data-filter="iot" onclick="filterProjects('iot', this)">IoT &amp; Embedded</button></li>
+          <li><button class="filter-btn" data-filter="software" onclick="filterProjects('software', this)">Software</button></li>
+          <li><button class="filter-btn" data-filter="network" onclick="filterProjects('network', this)">Networking</button></li>
+        </ul>
+        <div class="project-grid" id="projectGrid">
+          <div class="project-card" data-cat="iot">
+            <div class="project-thumb">
+              <img src="./SEM.jpeg">
+            </div>
+            <div class="project-meta">
+              <p class="project-cat">IoT · Firmware</p>
+              <h3 class="project-name">Smart Energy Meter</h3>
+              <p class="project-desc">Real-time energy monitoring system using ESP32 with MQTT and Firebase Realtime Database for cloud integration.</p>
+              <div class="tag-list">
+                <span class="tag">ESP32</span><span class="tag">MQTT</span><span class="tag">Firebase</span>
+              </div>
+            </div>
+          </div>
+          <div class="project-card" data-cat="software">
+            <div class="project-thumb">
+              <img src="./Visual Safety Alert.jpeg">
+            </div>
+            <div class="project-meta">
+              <p class="project-cat">AI · Computer Vision</p>
+              <h3 class="project-name">Computer Vision Safety Alert</h3>
+              <p class="project-desc">Vision-based safety detection system with real-time alert and notification capabilities for industrial monitoring.</p>
+              <div class="tag-list">
+                <span class="tag">CV</span><span class="tag">Real-time</span><span class="tag">Safety</span>
+              </div>
+            </div>
+          </div>
+          <div class="project-card" data-cat="network">
+            <div class="project-thumb">
+              <img src="./FTTH.jpeg">
+            </div>
+            <div class="project-meta">
+              <p class="project-cat">Network Design</p>
+              <h3 class="project-name">FTTH Network Design</h3>
+              <p class="project-desc">Fiber to the Home network design using OptiSystem 7.0 for Gerlong Residence, including signal loss and link budget analysis.</p>
+              <div class="tag-list">
+                <span class="tag">OptiSystem</span><span class="tag">FTTH</span><span class="tag">GPON</span>
+              </div>
+            </div>
+          </div>
+          <div class="project-card" data-cat="network">
+            <div class="project-thumb">
+              <img src="./radio.png">
+            </div>
+            <div class="project-meta">
+              <p class="project-cat">RF · Telecom</p>
+              <h3 class="project-name">Radio Link System Design</h3>
+              <p class="project-desc">Microwave radio link communication design between FPTK D Building and Pasar Baru Trade Center, with path profile and fade margin analysis.</p>
+              <div class="tag-list">
+                <span class="tag">Microwave</span><span class="tag">Link Budget</span><span class="tag">RF</span>
+              </div>
+            </div>
+          </div>
+          <div class="project-card" data-cat="iot software">
+            <div class="project-thumb">
+              <img src="./PIDS.jpeg">
+            </div>
+            <div class="project-meta">
+              <p class="project-cat">UI/UX · Embedded</p>
+              <h3 class="project-name">POC LED PIDS Configurator</h3>
+              <p class="project-desc">UI/UX LED P5 display configurator at Len Railway System, simplifying operator control and TCP/UDP communication to ESP32.</p>
+              <div class="tag-list">
+                <span class="tag">Figma</span><span class="tag">ESP32</span><span class="tag">TCP/IP</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- CONTACT -->
+    <article class="page" id="contact">
+      <div class="contact-section">
+        <h2 class="page-title">Contact Me</h2>
+        <div class="contact-info-cards">
+          <div class="info-card">
+            <div class="info-card-icon"><i class="fa-solid fa-envelope"></i></div>
+            <div>
+              <span>Email</span>
+              <a href="mailto:adzysslh@gmail.com">adzysslh@gmail.com</a>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-icon"><i class="fa-brands fa-whatsapp"></i></div>
+            <div>
+              <span>WhatsApp</span>
+              <a href="https://wa.me/6282120388737" target="_blank">+62 821-2038-8737</a>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-icon"><i class="fa-brands fa-linkedin-in"></i></div>
+            <div>
+              <span>LinkedIn</span>
+              <a href="https://linkedin.com/in/adzyssaleharyanto" target="_blank">adzyssaleharyanto</a>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div>
+              <span>Location</span>
+              <p>Bandung, West Java, Indonesia</p>
+            </div>
+          </div>
+        </div>
+        <div class="map-box">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126743.60697735!2d107.5309536!3d-6.9174639!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e6398252477f%3A0x146a1f93d3e815b2!2sBandung%2C%20West%20Java%2C%20Indonesia!5e0!3m2!1sen!2sid!4v1700000000000" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+      <div class="contact-section" style="margin-top:24px;">
+        <h3 class="section-title"><i class="fa-solid fa-paper-plane"></i> Send a Message</h3>
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Full Name</label>
+            <input type="text" id="senderName" placeholder="Enter your name">
+          </div>
+          <div class="form-field">
+            <label>Email</label>
+            <input type="email" id="senderEmail" placeholder="Enter your email">
+          </div>
+          <div class="form-field full">
+            <label>Subject</label>
+            <input type="text" id="senderSubject" placeholder="Message topic">
+          </div>
+          <div class="form-field full">
+            <label>Message</label>
+            <textarea id="senderMessage" placeholder="Write your message here..."></textarea>
+          </div>
+        </div>
+        <div class="form-btn">
+          <button class="btn-send" onclick="sendEmail()">
+            <i class="fa-solid fa-paper-plane"></i> Send Message
+          </button>
+        </div>
+        <p class="send-feedback" id="sendFeedback"></p>
+      </div>
+    </article>
+
+  </div>
+</main>
+
+<script>
+  function switchPage(id, btn) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+  function toggleContacts() {
+    const list = document.getElementById('contactsList');
+    const btn = document.getElementById('infoToggle');
+    list.classList.toggle('open');
+    btn.classList.toggle('active');
+    btn.innerHTML = list.classList.contains('open')
+      ? 'Hide Contacts <i class="fa-solid fa-chevron-down"></i>'
+      : 'Show Contacts <i class="fa-solid fa-chevron-down"></i>';
+  }
+  function filterProjects(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.project-card').forEach(card => {
+      if (cat === 'all' || card.dataset.cat.includes(cat)) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+  function sendEmail() {
+    const name    = document.getElementById('senderName').value.trim();
+    const email   = document.getElementById('senderEmail').value.trim();
+    const subject = document.getElementById('senderSubject').value.trim();
+    const message = document.getElementById('senderMessage').value.trim();
+    const feedback = document.getElementById('sendFeedback');
+    if (!name || !email || !subject || !message) {
+      feedback.textContent = '⚠ All fields must be filled before sending.';
+      feedback.className = 'send-feedback error';
+      return;
+    }
+    const body = `Hello Adzys,%0A%0AName: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(email)}%0A%0A${encodeURIComponent(message)}`;
+    window.location.href = `mailto:adzysslh@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+    feedback.textContent = '✓ Your email app will open. Make sure to press Send!';
+    feedback.className = 'send-feedback success';
+  }
+</script>
 </body>
-
 </html>
